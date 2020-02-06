@@ -1,0 +1,12 @@
+---
+- name: Create group for cd/cd user
+  group:
+    name: "{{ ci_cd_user_grp }}"
+    state: present
+
+- name: Create user
+  user:
+    name: "{{ ci_cd_user }}"
+    group: "{{ ci_cd_user_grp }}"
+    password: "{{ ci_cd_user_pass | password_hash('sha512') }}"
+

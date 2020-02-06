@@ -1,0 +1,6 @@
+---
+- name: Start drone ci/cd docker image
+  docker_container:
+    name: drone_master
+    image: "drone/drone:{{ drone.image.version }}"
+

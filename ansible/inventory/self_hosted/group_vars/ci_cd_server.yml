@@ -1,0 +1,4 @@
+---
+ci_cd_user: "cicd"
+ci_cd_user_grp: "cicd"
+ci_cd_user_pass: "password"
