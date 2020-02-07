@@ -1,12 +1,43 @@
 ---
 - name: Create group for cd/cd user
+  become: true
+  become_user: root
   group:
     name: "{{ ci_cd_user_grp }}"
     state: present
 
 - name: Create user
+  become: true
+  become_user: root
   user:
     name: "{{ ci_cd_user }}"
     group: "{{ ci_cd_user_grp }}"
     password: "{{ ci_cd_user_pass | password_hash('sha512') }}"
+    shell: /bin/bash
+
+- name: Include /etc/sudoers.d to /etc/sudoers
+  become: true
+  become_user: root
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    backup: true
+    line: '#includedir /etc/sudoers.d'
+    validate: 'visudo -cf %s'
+
+- name: Create /etc/sudoers.d/tech_users
+  become: true
+  become_user: root
+  file:
+    path: /etc/sudoers.d/tech_users
+    state: touch
+
+- name: Allow 'wheel' group to have passwordless sudo
+  become: true
+  become_user: root
+  lineinfile:
+    dest: /etc/sudoers.d/tech_users
+    state: present
+    line: "{{ ci_cd_user }} ALL=(ALL) NOPASSWD: ALL"
+    validate: 'visudo -cf %s'
 

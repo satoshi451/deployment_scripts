@@ -1,11 +1,53 @@
 ---
 - name: Install docker
   apt:
-    name: docker
+    name:
+    - docker
+    - docker-engine
+    - docker.io
+    - containerd
+    - runc
+    state: absent
+    autoclean: true
+    autoremove: true
+
+- name: Install docker dependencies
+  apt:
+    name:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+    state: latest
+    update_cache: true
+
+- name: Install docker-py pip package
+  pip:
+    name: docker-py
+
+- name: Add docker's official GPG key
+  shell: "curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -"
+
+- name: Install docker apt repository
+  shell: |
+   add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+- name: Install docker-ce from docker repo
+  apt:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    state: latest
+    update_cache: true
 
 - name: Start docker service
   service:
     name: docker
-    enabled: 'true'
     state: started
+    enabled: true
 

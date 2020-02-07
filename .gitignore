@@ -1,2 +1,5 @@
 *.retry
 *.log
+
+" Vim buffers
+*.sw[a-z]
