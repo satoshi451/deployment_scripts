@@ -1,22 +1,26 @@
 ---
+
+- debug: var=drone.image.version
+
 - name: Create directory for Drone service
   file:
-    path: /opt/drone/data
+    path: "{{ drone_data_dir }}"
     state: directory
 
 - name: Start drone ci/cd docker image
   docker_container:
     name: drone_master
-    image: "drone/drone:{{ drone.image.version }}"
+    image: "drone/drone:{{ docker.image.version }}"
     restart: true
     state: started
     env:
       DRONE_GITHUB_CLIENT_ID: "{{ github.client.id }}"
       DRONE_GITHUB_CLIENT_SECRET: "{{ github.client.secret }}"
       DRONE_RPC_SECRET: "{{ drone.rpc.secret }}"
+      DRONE_SERVER_HOST: "{{ drone.server.host }}"
     ports:
     - "8080:80"
     - "8443:443"
     volumes:
-    - "/opt/drone/data:/data"
+    - "{{ drone_data_dir }}:/data"
 

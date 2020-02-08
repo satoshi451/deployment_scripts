@@ -1,0 +1,5 @@
+---
+drone_data_dir: "/opt/drone/data"
+docker:
+  image:
+    version: 1

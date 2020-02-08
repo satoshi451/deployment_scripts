@@ -1,4 +1,0 @@
----
-drone:
-  image:
-    version: 1

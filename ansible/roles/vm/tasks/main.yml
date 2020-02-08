@@ -32,7 +32,7 @@
     path: /etc/sudoers.d/tech_users
     state: touch
 
-- name: Allow 'wheel' group to have passwordless sudo
+- name: Allow "{{ ci_cd_user }}" user to have passwordless sudo
   become: true
   become_user: root
   lineinfile:
