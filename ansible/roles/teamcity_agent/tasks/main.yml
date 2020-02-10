@@ -1,0 +1,22 @@
+---
+- name: Run teamcity docker image
+  docker_container:
+    name: "tc-agent-{{ item }}"
+    image: jetbrains/teamcity-agent
+    state: started
+    restart: true
+    volumes:
+    - "{{ teamcity.agent.conf_dir }}:/data/teamcity_agent/conf"
+    - "/var/run/docker.sock:/var/run/docker.sock"
+    - "/opt/buildagent/work:/opt/buildagent/work"
+    - "/opt/buildagent/temp:/opt/buildagent/temp"
+    - "/opt/buildagent/tools:/opt/buildagent/tools"
+    - "/opt/buildagent/plugins:/opt/buildagent/plugins"
+    - "/opt/buildagent/system:/opt/buildagent/system"
+    env:
+      SERVER_URL: "http://192.168.88.246:{{ teamcity.port | default('8111') }}"
+    network_mode: host
+  with_items:
+    - dagent-1
+    - dagent-2
+    - dagent-3

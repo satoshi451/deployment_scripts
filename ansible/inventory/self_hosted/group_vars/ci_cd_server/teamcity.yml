@@ -1,0 +1,6 @@
+---
+teamcity:
+  data_dir: "/usr/local/teamcity"
+  logs_dir: "/var/log/teamcity"
+  agent:
+    conf_dir: "/usr/local/teamcity_agents"

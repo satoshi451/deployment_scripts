@@ -1,0 +1,15 @@
+---
+- name: Create technical user
+  hosts: ci_cd_server
+  roles:
+  - { role: vm, tags: [prepare] }
+
+- name: Install teamcity server instance
+  hosts: ci_cd_server
+  become: true
+  #become_user: "{{ ci_cd_user }}"
+  roles:
+  - { role: teamcity_server, tags: [server] }
+
+- import_playbook: attach_teamcity_runners.yml
+

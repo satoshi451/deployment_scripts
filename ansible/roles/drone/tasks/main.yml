@@ -18,6 +18,10 @@
       DRONE_GITHUB_CLIENT_SECRET: "{{ github.client.secret }}"
       DRONE_RPC_SECRET: "{{ drone.rpc.secret }}"
       DRONE_SERVER_HOST: "{{ drone.server.host }}"
+      DRONE_LOGS_DEBUG: true
+      DRONE_LOGS_TEXT: true
+      DRONE_LOGS_PRETTY: true
+      DRONE_LOGS_COLOR: true
     ports:
     - "8080:80"
     - "8443:443"

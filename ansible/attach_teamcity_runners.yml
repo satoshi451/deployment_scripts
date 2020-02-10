@@ -1,0 +1,7 @@
+---
+- name: Run teamcity docker image for runners
+  hosts: ci_cd_server
+  become: true
+  become_user: "{{ ci_cd_user }}"
+  roles:
+  - role: teamcity_agent

@@ -1,0 +1,19 @@
+---
+- name: Create directories for teamcity server instance
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+  - "{{ teamcity.data_dir }}"
+  - "{{ teamcity.logs_dir }}"
+
+- name: Start Teamcity server
+  docker_container:
+    name: teamcity_server
+    image: jetbrains/teamcity-server
+    ports:
+    - "{{ teamcity.port | default('8111') }}:8111"
+    volumes:
+    - "{{ teamcity.data_dir }}:/opt/teamcity_server/datadir"
+    - "{{ teamcity.logs_dir }}:/opt/teamcity/logs"
+
